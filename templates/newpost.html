@@ -2,14 +2,14 @@
 
 {% block content %}
 
-<h1>Blog Home</h1>
-<form method='POST'>
+<h1>Write a new post</h1>
+<form action="/newpost" method='POST'>
         <label>Title for your new blog: <br /> 
-            <input name = 'name' type = "text">       
+            <input name='name' type="text">       
         </label>
         <br />
         <label>Your new blog: <br />
-            <textarea name = 'entry'></textarea>
+            <textarea name='text'></textarea>
         </label>
         <br />
     <input type="submit" value="Submit">
