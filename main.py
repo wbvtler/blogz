@@ -32,27 +32,36 @@ class Entry(db.Model):
 def to_mainpage():
     return redirect('/blog')
 
+
 @app.route('/blog')
 def blog():
     entries = Entry.query.all()
     return render_template('blog-home.html', title='Home', entries=entries)
+
 
 @app.route('/newpost', methods=['GET','POST'])
 def newpost():
     if request.method == 'POST':
         entry_name = request.form['name']
         entry_text = request.form['text']
-        new_entry = Entry(name=entry_name, text=entry_text)
+        new_entry = Entry(entry_name, entry_text)
         db.session.add(new_entry)
         db.session.commit()
+        entry_id = new_entry.id
         return redirect('/blog')
+        #return redirect('/view-post?id=' + entry_id)
     return render_template('newpost.html')
+
 
 @app.route('/view-post')
 def view_post():
     # TODO: 
     # Use get request to select correct post
-    return render_template('view-post.html')
+    entry_id = request.args.get('id')
+    entry_veiw = Entry.query.filter_by(id=entry_id).first()
+    name = entry_veiw.name
+    text = entry_veiw.text
+    return render_template('view-post.html', name=name, text=text)
 
 
 if __name__ == '__main__':
