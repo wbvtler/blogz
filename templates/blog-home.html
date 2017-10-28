@@ -6,13 +6,14 @@
 
 <hr />
 
-    {% if entries|length == 0 %}
+    {% if blogs|length == 0 %}
     <p>No blog posts yet</p>
     {% else %}
 
-        {% for entry in entries %}
-                <a href="/view-post?id={{entry.id}}"><h1>{{entry.name}}</h1></a>
-                <p>{{entry.text}}</p>
+        {% for blog in blogs %}
+                <a href="/view-post?id={{blog.id}}"><h1>{{blog.name}}</h1></a>
+                <p>{{blog.text}}</p>
+                <p><em>{{blog.user.username}}</em></p>
             <hr />
         {% endfor %}
         

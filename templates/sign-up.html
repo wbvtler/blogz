@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form method='POST'>
+    <p>
+        <label>Username: 
+            <input name = 'username' value ="{{username}}" type = "text">        
+        </label>
+        <span class='error'>{{name_error}}</span>
+    </p>
+    <p>
+        <label>Password: 
+            <input name = 'Password' value = "{{password}}" type = "password">
+        </label>
+        <span class='error'>{{init_pass_error}}</span>
+    </p>
+    <p>
+        <label>Verify Password: 
+            <input name = 'verify' value = "{{verify}}" type = "password">
+        </label>
+        <span class='error'>{{ver_pass_error}}</span>
+    </p>
+    
+    <input type="submit">
+</form>
+{% endblock %}
