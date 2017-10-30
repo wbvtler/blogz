@@ -104,7 +104,7 @@ def login():
             return redirect('/blog')
         else:
             flash('User password incorrect, or user does not exist', 'error')
-            return redirect('/')
+            return redirect('/login')
 
     return render_template('login.html')
 
@@ -117,27 +117,26 @@ def newpost():
         blog_name = request.form['name']
         blog_text = request.form['text']
         user_id = session['userId']
-        new_blog = Blog(blog_name, blog_text, user_id)
-        db.session.add(new_blog)
-        db.session.commit()
-        return redirect('/blog')
+        if blog_name == '' or blog_text == '':
+            flash('Your blog post must have a title and body', 'error')
+            return redirect('/newpost')
+        else:
+            new_blog = Blog(blog_name, blog_text, user_id)
+            db.session.add(new_blog)
+            db.session.commit()
+            return redirect('/blog')
     return render_template('newpost.html')
 
 ##### NOT WORKING #####
-# Fix for user with no posts
-# Add template for indv. users with username heading
 @app.route('/blog', methods=['GET', 'POST'])
 def blog_home():
     print(session)
-    blogs = Blog.query.all()
-    if not len(blogs) < 1:
-        ownerId = request.args.get('userId')
-        blogs = Blog.query.filter_by(owner_id=ownerId).all()
-        blog_owner = User.query.filter_by(id=ownerId).first()
-        owner_username = blog_owner.username
-        return render_template('indv-user.html', title=owner_username,
-    owner_username=owner_username, blogs=blogs)
-    return render_template('blog-home.html', title='Home', blogs=blogs)
+    ownerId = request.args.get('userId')
+    blogs = Blog.query.filter_by(owner_id=ownerId).all()
+    if len(blogs) < 1:
+        blogs = Blog.query.all()   
+        return render_template('blog-home.html', title='Home', blogs=blogs)
+    return render_template('indv-user.html', title='Single User', blogs=blogs)
 
 #Working
 @app.route('/view-post')
