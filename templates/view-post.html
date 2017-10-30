@@ -2,9 +2,12 @@
 
 {% block content %}
 
-<h1>{{name}}</h1>
+<h1>{{blog.name}}</h1>
 <div>
-    <p>{{text}}</p>
+    <p>{{blog.text}}</p>
+    <a href="/blog?userId={{blog.owner.id}}">{{blog.owner.username}}</a>
 </div>
+
+
 
 {% endblock %}

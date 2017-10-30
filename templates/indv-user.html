@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<h1>All Blog Posts</h1>
+<h1>{{owner_username}}</h1>
 
 <hr />
 
@@ -13,7 +13,7 @@
         {% for blog in blogs %}
                 <a href="/view-post?blogId={{blog.id}}"><h2>{{blog.name}}</h2></a>
                 <p>{{blog.text}}</p>
-                <h6><a href="/blog?userId={{blog.owner.id}}"><em>{{blog.owner.username}}</em></a></h6>
+                <h6><a href="/blog?userId={{blog.owner.id}}"><em>{{owner_username}}</em></a></h6>
             <hr />
         {% endfor %}
         
